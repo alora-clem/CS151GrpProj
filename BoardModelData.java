@@ -1,4 +1,4 @@
-//package groupProject;
+package groupProject;
 
 import java.awt.event.*;
 import java.util.*;
@@ -21,7 +21,9 @@ public class BoardModelData {
 	private ArrayList<Integer> previousBoardData;
 	//array list for action listeners
 	private ArrayList<ActionListener> listenerArray;
-	
+	//Can be 3 or 4
+	private int marbleStartNumber = 4;
+
 	/**
     Constructor to create board model to hold data
     Postcondition: the array lists holding data are created
@@ -30,8 +32,33 @@ public class BoardModelData {
 		currentBoardData = new ArrayList<>();
 		previousBoardData = new ArrayList<>();
 		listenerArray = new ArrayList<>();
+		//entering start up data
+		//first home pit
+		
+		currentBoardData.add(0);
+		for(int i = 1; i < 7; i ++){
+			currentBoardData.add(marbleStartNumber);
+		}
+		//second home pit
+		currentBoardData.add(0);
+		for(int i = 8; i < 14; i ++){
+			currentBoardData.add(marbleStartNumber);
+		}
 	}
-	
+	/**
+	 * Sets the starting amount of marbles to either 3 or 4
+	 * @param i the amount of marbles
+	 * Precondition: must be 3 or 4
+	 * Postcondition: starting marbles is changed
+	 */
+	public void setStartingMarbles(int i){
+		if(i==3 || i==4){
+			marbleStartNumber = i;
+		}
+		else{
+			//throw some kind of exception
+		}
+	}
 	/**
     To update the array list of data after a move has been made
     @param index to change
@@ -57,7 +84,7 @@ public class BoardModelData {
 			}
 		}
 	}
-	
+
 	/**
     To return the value of marbles in a pit
     @param index to retrieve
@@ -67,7 +94,7 @@ public class BoardModelData {
 	public int getMarblesInPit(int index){
 		return currentBoardData.get(index);
 	}
-	
+
 	/**
     To undo the last move
     Postcondition: the current board is set to the previous board
@@ -75,7 +102,7 @@ public class BoardModelData {
 	public void undo(){
 		currentBoardData = new ArrayList<>(previousBoardData);
 	}
-	
+
 	/**
     To attach a listener to the model
     @param l ActionListener that signals a change in data
