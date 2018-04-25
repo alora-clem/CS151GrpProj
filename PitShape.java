@@ -1,121 +1,138 @@
 package group;
 
-import java.awt.*;
-import java.awt.geom.*;
-
-public class PitShape {
-	private int x;
-	private int y;
-	private int width;
-	private int height;
-	private int numberOfMarbles;
-	private Shape shape;
-	final int MARBLE_SIZE = 10;
 
 
-	public PitShape(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-	}
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import javax.swing.JComponent;
 
-	public void fill(Graphics2D g) {
-		g.setColor(Color.BLACK);
-		g.setStroke(new BasicStroke(10));
-		g.draw(shape);
-		g.setStroke(new BasicStroke(3));
+/** 
+ * author @sidqdeep
+ * 
+ */
 
-		//indicates the number of stones in a pit
-		if (numberOfMarbles > 0) {
-			g.setColor(Color.WHITE);
-			Font font = new Font("Futura", Font.BOLD, 20);
-			g.setFont(font);
-			g.drawString(numberOfMarbles + "", x + 30, y + 20);
-		}
+public class PitShape extends JComponent{
 
-		//determines placement of the stones in overlapping fashion
-		int counter = 1;
-		for (int i = 0; i < numberOfMarbles; i++) {
-			double x;
-			double y;
-			if (counter % 2 == 1) {
-				x = this.x + 30;
-				y = (this.y + 5) + 8 * counter / 1.5;
-			} else {
-				x = this.x + 15;
-				y = (this.y + 5) + 8 * counter / 1.5;
-			}
+	int marbles;
+	int location;
+	Player playa;
+	BoardStyle style;
 
-			//draws the stones
-			Ellipse2D.Double marble = new Ellipse2D.Double(x, y + 25, MARBLE_SIZE, MARBLE_SIZE - 5);
-			g.setColor(Color.CYAN);
-			g.fill(marble);
-			g.setColor(Color.BLACK);
-			g.setStroke (new BasicStroke(2));
-			g.draw(marble);
-			counter++;
-		}
-	}
-
-
-	public int getMarbles() {
-		return numberOfMarbles;
-	}
-
-	
-	public void setMarblessetMarbles(int amount) 
+	/**
+	 * Pit class constructor - creates a pit with the given parameters
+	 * @param n - the number of marbles to initialize the pit with
+	 * @param index - the location of the mancala
+	 * @param player - the Player this mancala belongs to
+	 * @param sty - a concrete implementation of BoardStyle determining
+	 * the shape of the pits to be used in the game
+	 */        
+	public PitShape (int n, int index, Player player, BoardStyle sty)
 	{
-		
-		numberOfMarbles = amount;
-		
+		marbles = n;
+		location = index;
+		playa = player;
+		style = sty;     
 	}
-	
 
-	public void setShape(Shape s) 
+	/**
+	 *Get the player the pit belongs to
+	 *@return the pit's player
+	 */
+	public Player getPlayer()
 	{
-		shape = s;
+		return playa;
 	}
 
-
-	public Shape getShape() {
-		return shape;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-
-	public int getY() {
-		return y;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-	
-
-	public boolean contains(Point2D p) 
+	/**
+	 *Change the number of marbles in the current pit
+	 *@param n number of marbles to be set to
+	 */
+	public void setMarbles(int n)
 	{
-		if (shape.contains(p)) 
+		marbles = n;
+	}
+
+	/**
+	 *Get the number of marbles in the current pit
+	 *@return the pit's marbles
+	 */
+	public int getMarbles()
+	{
+		return marbles;
+	}
+
+	/**
+	 *Get the index or location of each pit
+	 *@return the location of each pit
+	 */
+	public int getIndex()
+	{
+		return location;
+	}
+
+	/**
+	 *Check if the pit is empty or not
+	 *@return true if the pit is empty and false otherwise
+	 */
+	public boolean isEmpty()
+	{
+		if(marbles == 0)
 		{
 			return true;
 		}
-		else 
+		else
 		{
 			return false;
 		}
 	}
-	
 
-	public void draw (Graphics2D g)
+	/**
+	 *Get the style of the board, i.e. circles or rectangles
+	 *@return the style of the board
+	 */
+	public BoardStyle getStyle()
 	{
-		g.draw(shape);
-		fill(g);
+		return style;
+	}
+
+	/**
+	 *Get the shape of the pit to be drawn
+	 *@param b - the board style determining the shape
+	 *@return the Shape based on the board style
+	 */
+	public Shape drawPit(BoardStyle b)
+	{
+		return b.getPit();
+	}
+
+	/**
+	 *Get the player the pit belongs to
+	 *@param g graphics object used to draw shape
+	 */
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D)g;
+		g2.draw(this.drawPit(style));	
+		int shapeHeight=this.drawPit(style).getBounds().height;
+		int shapeWidth=this.drawPit(style).getBounds().width;
+		int col = shapeWidth/2-5;
+		int y = 0;
+		int row = shapeHeight/2-5;
+		int x = 0;
+		for(int i = 0; i< getMarbles(); i++)
+		{
+
+			if( y< shapeHeight)
+			{
+				g2.drawOval(col,y, 10,10);
+				y+= 10;				
+			}
+			else{
+				g2.drawOval(x,row, 10,10);
+				x += 10;
+			}
+		}
 	}
 }
