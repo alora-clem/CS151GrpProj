@@ -74,10 +74,11 @@ public class BoardView implements ChangeListener
 		// undo button to north
 		frame.add(undo, BorderLayout.NORTH);
 		frame.add(grid, BorderLayout.CENTER);
-		frame.pack();
 		playerTurn = new JTextField(board.getPlayer().toString());
 		playerTurn.setHorizontalAlignment(JTextField.CENTER);
 		frame.add(playerTurn, BorderLayout.SOUTH);
+		frame.pack();
+		frame.setSize(1000, 500);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
