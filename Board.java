@@ -18,7 +18,7 @@ public class Board {
 	private int countUndo;
 	private int[] previousState;
 	private ArrayList<PitShape> pitShapes;
-	private boolean redo;
+	private boolean again;
 
 	/**
 	 * Board class constructor - creates a starting board initializing empty "pits"
@@ -31,12 +31,12 @@ public class Board {
 	public Board(BoardStyle aBoardStyle)
 
 	{
-		redo = false;
 		countUndo = 0;
 		previousState = new int[14];
 
 		p = Player.ONE;
 		extraTurn = false;
+		again = true;
 		pitShapes = new ArrayList<PitShape>();
 		for (int i = 0; i < 6; i++) {
 			pitShapes.add(new PitShape(0, i, Player.ONE, aBoardStyle));
@@ -214,8 +214,7 @@ public class Board {
 	 *            - the chosen pit by the player.
 	 */
 	public void choosePit(PitShape pitShape) {
-		if (!redo)
-			countUndo = 0;
+		countUndo = 0;
 		if (pitShape.getPlayer() != p)
 			return;
 		if (pitShape.getMarbles() == 0)
@@ -237,7 +236,6 @@ public class Board {
 		if (!extraTurn) {
 			switchPlayer();
 		}
-		redo = false;
 		ChangeEvent event = new ChangeEvent(this);
 		for (ChangeListener listener : listeners) {
 			listener.stateChanged(event);
@@ -299,14 +297,15 @@ public class Board {
 	 */
 	public void undo() {
 		if (prevState() && canUndo()) {
+			again = true;
 			int counter = 0;
 			for (PitShape p : pitShapes) {
 				p.setMarbles(previousState[counter]);
 				counter++;
 			}
-			countUndo++;
-			redo = true;
-			if (!extraTurn) {
+			countUndo = 1;
+			if (!extraTurn && again) {
+				again = false;
 				switchPlayer();
 			}
 		}
@@ -368,6 +367,7 @@ public class Board {
 				hasPrev = false;
 			else {
 				hasPrev = true;
+				break;
 			}
 		}
 		if (hasPrev)
@@ -383,7 +383,7 @@ public class Board {
 	 * @return a boolean, true if the player can undo, false if not.
 	 */
 	private boolean canUndo() {
-		if (countUndo == 1 && redo == false)
+		if (countUndo == 1)
 			return false;
 		return true;
 	}
