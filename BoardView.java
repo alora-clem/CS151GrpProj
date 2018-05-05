@@ -1,6 +1,8 @@
-package group;
+
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -92,7 +94,24 @@ public class BoardView implements ChangeListener
 		undo.add(undoButton);
 		frame.add(undo, BorderLayout.NORTH);
 		
-		frame.add(grid, BorderLayout.CENTER);
+		//pit info
+		JTextArea aPits= new JTextArea("                                                A1               "
+				+ "           A2                          A3                          A4   "
+				+ "                       A5                          A6 \n Player A");
+		JTextArea bPits= new JTextArea("Player B\n                                                 B6               "
+				+ "           B5                          B4                          B3   "
+				+ "                       B2                          B1 ");
+		JTextArea mancalaA= new JTextArea("\n\n\n\nM \na \nn \nc \na \nl \na \n \nA");
+		JTextArea mancalaB= new JTextArea("\n\n\n\nM \na \nn \nc \na \nl \na \n \nB");
+		
+		JPanel fullBoard = new JPanel(new BorderLayout());
+		fullBoard.add(grid, BorderLayout.CENTER);
+		fullBoard.add(aPits, BorderLayout.SOUTH);
+		fullBoard.add(bPits, BorderLayout.NORTH);
+		fullBoard.add(mancalaA, BorderLayout.EAST);
+		fullBoard.add(mancalaB, BorderLayout.WEST);
+		
+		frame.add(fullBoard, BorderLayout.CENTER);
 		
 		playerTurn = 	new JTextField(board.getPlayer().toString());
 		playerTurn.setHorizontalAlignment(JTextField.CENTER);

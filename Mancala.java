@@ -1,4 +1,4 @@
-package group;
+
 
 
 import java.awt.Graphics;
@@ -109,4 +109,3 @@ public class Mancala extends PitShape
 	
 	
 }
-
