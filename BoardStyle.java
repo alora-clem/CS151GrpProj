@@ -2,10 +2,9 @@ package group;
 
 import java.awt.Shape;
 
-/**
- *Interface that defines BoardFormat. Strategy Pattern
- * 
- * author @sidqdeep
+/** 
+ * This interface contains the methods pertaining to functionality for the display
+ *  author @Sidqdeep, @Alora, @Patrick
  */
 
 public interface BoardStyle 
@@ -13,14 +12,14 @@ public interface BoardStyle
 	
 	
 	/**
-	 * Returns the shape of the pit to use according to the specifications
-	 * of the class implementing this interface.
+	 * Returns the shape of the pit 
 	 * @return a Shape object of the pit
 	 */
 	public Shape getPit();
+	
+	
 	/**
-	 * Returns the shape of the mancala to use according to the specifications
-	 * of the class implementing this interface.
+	 * Returns the shape of the mancala 
 	 * @return a Shape object of the mancala
 	 */
 	public Shape getMancala(Player p);
