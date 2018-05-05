@@ -13,73 +13,83 @@ import javax.swing.JPanel;
 
 
 /** 
- * 
- * author @sidqdeep
+ * author @Sidqdeep, @Alora, @Patrick
  * 
  */
 
 public class MancalaTester{
 
 	static JComboBox marbles;
-	static JComboBox style;
+	static JComboBox styl;
 	static JButton submit;
 	static JFrame start;
 	static JLabel choose;
 	static JPanel options;
 
 
-	public static void main(String[] args){
+	public static void main(String[] args)
+	{
 
-		start = new JFrame("Start Mancala");
+		start	 = 	new JFrame("Start Mancala");
 		start.setSize(400, 200);
 		start.setLayout(new BorderLayout());
-		marbles = new JComboBox();
-		style = new JComboBox();
-		submit = new JButton("Submit");
-		choose = new JLabel("Please select a style and # of marbles to begin game!");
-		options = new JPanel();
+		
+		marbles = 	new JComboBox();
+		styl = 	new JComboBox();
+		
+		submit = 	new JButton("Submit");
+		choose = 	new JLabel("Please select a style and # of marbles to begin game!");
+		options = 	new JPanel();
 
 
-		//Populate options
 		marbles.addItem("3");
 		marbles.addItem("4");
-		style.addItem("Rectangles");
-		style.addItem("Circles");
-		options.add(style);
+		styl.addItem("Rectangles");
+		styl.addItem("Circles");
+		options.add(styl);
 		options.add(marbles);
 
-		//Register actionListeners for buttons
+		//Register actionListeners to buttons
 		submit.addActionListener(new submit_Action());
 
-		//Add components to the frame
+		//Add to the frame
 		start.add(choose, BorderLayout.NORTH);
 		start.add(options, BorderLayout.CENTER);
 		start.add(submit, BorderLayout.SOUTH);
 		start.setVisible(true);	
+		
+		
 	}
 
 
 	/** 
-	 * This class contains the methods pertaining to gameplay for the game and 
-	 * an action to be performed for the data for a given configuration.
+	 * This class contains the methods and actions performed int he game 
 	 * 
 	 */
-	static class submit_Action implements ActionListener{
+	static class submit_Action implements ActionListener
+	{
 
 		/**
-		 *Based on user selection, sets up a new board
-		 *@param e - Action event which occurred
+		 *sets up a new board based on the user choice
+		 *@param e -> Action event which occurred
 		 */
-		public void actionPerformed (ActionEvent e){
+		public void actionPerformed (ActionEvent e)
+		{
+			
 			start.setVisible(false);
-			CircleStyle cS=new CircleStyle();
-			RectangleStyle rS=new RectangleStyle();
-			if(style.getSelectedItem().toString().equals("Rectangles"))
+			
+			CircleStyle cStly  =  new CircleStyle();
+			RectangleStyle rS  =  new RectangleStyle();
+			
+			if(styl.getSelectedItem().toString().equals("Rectangles"))
 			{
-				Board b=new Board(rS);
-				BoardView bV=new BoardView(b);
-				b.addChangeListener(bV);
+				
+				Board b  =   new Board(rS);
+				BoardView bView   =  new BoardView(b);
+				b.addChangeListener(bView);
+				
 				if(marbles.getSelectedItem().toString().equals("3"))
+				
 				{
 					b.fillBoard(3);
 				}
@@ -87,12 +97,16 @@ public class MancalaTester{
 				{
 					b.fillBoard(4);
 				}
+				
+				
 			}
+			
 			else
 			{
-				Board b=new Board(cS);
-				BoardView bV=new BoardView(b);
-				b.addChangeListener(bV);
+				Board b =	new Board(cStly);
+				BoardView bView = new BoardView(b);
+				b.addChangeListener(bView);
+				
 				if(marbles.getSelectedItem().toString().equals("3"))
 				{
 					b.fillBoard(3);
@@ -101,7 +115,14 @@ public class MancalaTester{
 				{
 					b.fillBoard(4);
 				}
-			}			
+				
+			}	
+			
+			
 		}
+		
+		
 	}
+	
 }
+
