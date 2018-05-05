@@ -110,24 +110,3 @@ public class Mancala extends PitShape
 	
 }
 
-
- /**
-	 *Get the shape of the pit to be drawn
-	 *@param b - the board style determining the shape
-	 *@return the Shape based on the board style
-	 */
- public Shape drawPit(BoardStyle b) {
-     return b.getMancala(getPlayer());
- }
- 
- /**
-	 *Get the player the pit belongs to
-	 *@param g graphics object used to draw shape
-	 */
- public void paintComponent(Graphics g) {
-     super.paintComponent(g);
-     Graphics2D g2 = (Graphics2D) g;
-     g2.draw(this.drawPit(getStyle()));
- }
-}
-
