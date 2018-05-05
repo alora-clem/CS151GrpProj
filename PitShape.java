@@ -8,40 +8,43 @@ import java.awt.Shape;
 import javax.swing.JComponent;
 
 /** 
- * author @sidqdeep
+ * author @Sidqdeep, @Alora, @Patrick
  * 
  */
 
-public class PitShape extends JComponent{
+public class PitShape extends JComponent
+{
 
 	int marbles;
 	int location;
-	Player playa;
+	Player playr;
 	BoardStyle style;
 
 	/**
-	 * Pit class constructor - creates a pit with the given parameters
-	 * @param n - the number of marbles to initialize the pit with
-	 * @param index - the location of the mancala
-	 * @param player - the Player this mancala belongs to
-	 * @param sty - a concrete implementation of BoardStyle determining
-	 * the shape of the pits to be used in the game
+	 * creates a pit with the given parameters
+	 * @param n number of marbles to initialize the pit with
+	 * @param index for the location of the mancala
+	 * @param player the mancala belongs to
+	 * @param styl implementation of BoardStyle style
 	 */        
-	public PitShape (int n, int index, Player player, BoardStyle sty)
+	public PitShape (int n, int index, Player player, BoardStyle styl)
 	{
+		
 		marbles = n;
 		location = index;
-		playa = player;
-		style = sty;     
+		playr = player;
+		style = styl;
+		
 	}
 
 	/**
+	 * 
 	 *Get the player the pit belongs to
 	 *@return the pit's player
 	 */
 	public Player getPlayer()
 	{
-		return playa;
+		return playr;
 	}
 
 	/**
@@ -50,6 +53,7 @@ public class PitShape extends JComponent{
 	 */
 	public void setMarbles(int n)
 	{
+		
 		marbles = n;
 	}
 
@@ -59,68 +63,85 @@ public class PitShape extends JComponent{
 	 */
 	public int getMarbles()
 	{
+		
 		return marbles;
 	}
 
+	
+	
 	/**
 	 *Get the index or location of each pit
 	 *@return the location of each pit
 	 */
 	public int getIndex()
 	{
+		
 		return location;
 	}
 
+	
+	
 	/**
 	 *Check if the pit is empty or not
 	 *@return true if the pit is empty and false otherwise
 	 */
 	public boolean isEmpty()
 	{
+		
 		if(marbles == 0)
 		{
 			return true;
 		}
+		
 		else
 		{
 			return false;
 		}
+		
 	}
 
+	
+	
 	/**
-	 *Get the style of the board, i.e. circles or rectangles
+	 *Get the style of the board either circle or rectangel
 	 *@return the style of the board
 	 */
 	public BoardStyle getStyle()
 	{
-		return style;
+			return style;
 	}
 
 	/**
 	 *Get the shape of the pit to be drawn
-	 *@param b - the board style determining the shape
-	 *@return the Shape based on the board style
+	 *@param b the board style determining the shape
+	 *@return the shape based on the board style
 	 */
 	public Shape drawPit(BoardStyle b)
 	{
-		return b.getPit();
-	}
+			return b.getPit();
+	}	
 
+	
 	/**
 	 *Get the player the pit belongs to
 	 *@param g graphics object used to draw shape
 	 */
 	public void paintComponent(Graphics g)
 	{
+		
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
-		g2.draw(this.drawPit(style));	
+		g2.draw(this.drawPit(style));
+		
+		
 		int shapeHeight=this.drawPit(style).getBounds().height;
 		int shapeWidth=this.drawPit(style).getBounds().width;
+		
 		int col = shapeWidth/2-5;
 		int y = 0;
 		int row = shapeHeight/2-5;
 		int x = 0;
+		
 		for(int i = 0; i< getMarbles(); i++)
 		{
 
@@ -130,9 +151,16 @@ public class PitShape extends JComponent{
 				y+= 10;				
 			}
 			else{
+				
 				g2.drawOval(x,row, 10,10);
 				x += 10;
 			}
+			
 		}
+		
 	}
+	
+	
+	
+	
 }
